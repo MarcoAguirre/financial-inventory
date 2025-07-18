@@ -1,0 +1,30 @@
+<section class="product-list">
+  <h1>Productos financieros</h1>
+
+  <ng-container *ngIf="products.length > 0; else emptyState">
+    <table>
+      <thead>
+        <tr>
+          <th>Logo</th>
+          <th>Nombre</th>
+          <th>Descripción</th>
+          <th>Fecha de liberación</th>
+          <th>Fecha de revisión</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of products">
+          <td><img [src]="product.logo" alt="Logo" width="80" height="45" /></td>
+          <td>{{ product.name }}</td>
+          <td>{{ product.description }}</td>
+          <td>{{ product.date_release }}</td>
+          <td>{{ product.date_revision }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </ng-container>
+
+  <ng-template #emptyState>
+    <p>No hay productos para mostrar...</p>
+  </ng-template>
+</section>
