@@ -8,10 +8,12 @@ import { Product } from '../../models/product.model';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './product-page.component.html',
-  styleUrl: './product-page.component.css'
+  styleUrl: './product-page.component.css',
 })
 export class ProductPageComponent {
   products: Product[] = [];
+  searchTerm: string = '';
+  filteredProducts: Product[] = [];
 
   constructor(private productService: ProductService) {}
 
@@ -19,11 +21,18 @@ export class ProductPageComponent {
     this.productService.getAll().subscribe({
       next: (data) => {
         this.products = data;
-        console.log('Productos cargados:', data);
+        this.filteredProducts = data;
       },
       error: (err) => {
         console.error('Error al cargar productos:', err);
-      }
+      },
     });
+  }
+
+  onSearch(term: string): void {
+    this.searchTerm = term.toLowerCase();
+    this.filteredProducts = this.products.filter((product) =>
+      product.name.toLowerCase().includes(this.searchTerm)
+    );
   }
 }
