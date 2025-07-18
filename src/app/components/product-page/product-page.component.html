@@ -20,7 +20,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let product of filteredProducts">
+        <tr *ngFor="let product of pagedProducts">
           <td>
             <img [src]="product.logo" alt="Logo" width="80" height="45" />
           </td>
@@ -29,6 +29,24 @@
           <td>{{ product.date_release }}</td>
           <td>{{ product.date_revision }}</td>
         </tr>
+        <div class="toolbar">
+          <span class="total">
+            Total: {{ filteredProducts.length }} Resultados
+          </span>
+
+          <label>
+            Mostrar
+            <select
+              #pageSizeSelect
+              (change)="onChangePageSize(+pageSizeSelect.value)"
+            >
+              <option [value]="5">5</option>
+              <option [value]="10">10</option>
+              <option [value]="20">20</option>
+            </select>
+            registros
+          </label>
+        </div>
       </tbody>
     </table>
   </ng-container>
