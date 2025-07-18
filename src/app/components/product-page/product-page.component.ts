@@ -15,6 +15,10 @@ export class ProductPageComponent {
   searchTerm: string = '';
   filteredProducts: Product[] = [];
 
+  minNumberOfProducts: number = 5;
+  currentPage: number = 1;
+  pagedProducts: Product[] = [];
+
   constructor(private productService: ProductService) {}
 
   ngOnInit(): void {
@@ -34,5 +38,17 @@ export class ProductPageComponent {
     this.filteredProducts = this.products.filter((product) =>
       product.name.toLowerCase().includes(this.searchTerm)
     );
+  }
+
+  updatePagedProducts(): void {
+    const startIndex = (this.currentPage - 1) * this.minNumberOfProducts;
+    const endIndex = startIndex + this.minNumberOfProducts;
+    this.pagedProducts = this.filteredProducts.slice(startIndex, endIndex);
+  }
+
+  onChangePageSize(size: number): void {
+    this.minNumberOfProducts = size;
+    this.currentPage = 1;
+    this.updatePagedProducts();
   }
 }
