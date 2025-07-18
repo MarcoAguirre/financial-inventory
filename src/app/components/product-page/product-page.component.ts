@@ -24,9 +24,10 @@ export class ProductPageComponent {
 
   ngOnInit(): void {
     this.productService.getAll().subscribe({
-      next: (data) => {
-        this.products = data;
-        this.filteredProducts = data;
+      next: (data: any) => {
+        this.products = data.data;
+        this.filteredProducts = data.data;
+        this.updatePagedProducts();
       },
       error: (err) => {
         console.error('Error al cargar productos:', err);
